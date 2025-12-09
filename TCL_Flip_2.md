@@ -45,6 +45,12 @@ Needed for WhatsApp and Uber (in-browser) to work
 
 ### Uber (in-browser)
 
+- follow the **get higher resolution** steps
+- in browser go to m.uber.com
+- use mouse to go to login
+- enter phone #, verify, then password
+- now it is setup!
+
 ### WhatsApp
 
 1. Follow steps **To allow app installation** and **To get higher resolution**
