@@ -15,7 +15,7 @@ This document tracks working solutions for installing apps and getting developer
 1. Follow steps for **Developer access**
 2. In command window `adb shell settings put global development_settings_enabled 1`
 3. Unplug TCL from computer and turn off
-4. Run `./example.sh`
+4. Run `./example.sh` (worked on Mac or Linux)
 5. Plug TCL back in
 6. Unlock the bootloader to allow modified boot partition
    - `fastboot flashing unlock`
