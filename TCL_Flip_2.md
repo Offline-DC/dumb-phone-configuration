@@ -37,7 +37,7 @@ This document tracks working solutions for installing apps and getting developer
 Needed for WhatsApp and Uber (in-browser) to work
 
 1. Enable **Developer access**
-2. Higher resolution via `adb shell wm size 321x428`
+2. Higher resolution via `adb shell wm density 120`
    - You must do this or WhatsApp QR code won't work
 3. Install WhatsApp via `adb install WhatsApp.spk`
 4. make font in tcl flip largest
