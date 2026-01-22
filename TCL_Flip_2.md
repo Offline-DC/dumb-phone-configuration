@@ -49,7 +49,7 @@ Needed for WhatsApp and Uber (in-browser) to work
 - in browser go to m.uber.com
 - use mouse to go to login
 - enter phone #, verify, then password
-- now it is setup!
+- Install apk from [here](https://github.com/Offline-DC/uber-launcher-android) and make it a key shortcut
 
 ### WhatsApp
 
