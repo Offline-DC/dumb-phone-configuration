@@ -33,6 +33,7 @@ python3 -m pip install --user pyserial
 5. Plug TCL back in
 6. Unlock the bootloader to allow modified boot partition
    - `fastboot flashing unlock`
+   - Then, hit Volume up on TCL
 7. Flash boot partition
    - `fastboot flash boot neutron.img`
 8. Reboot phone
