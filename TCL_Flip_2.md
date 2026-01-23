@@ -18,6 +18,12 @@ Do setup in terminal:
 brew install android-platform-tools
 ```
 
+3. Install serial package:
+
+```bash
+python3 -m pip install --user pyserial
+```
+
 ### 2. To allow app installation:
 
 1. On TCL Flip 2, follow steps for **Developer access**
