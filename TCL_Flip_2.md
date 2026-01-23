@@ -42,7 +42,8 @@ python3 -m pip install --user pyserial
 10. Finish setup and restart phone at home page
 11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
-    - Wait for Magisk to install and then in notifications allow to download full version.
+    - Do Magisk install
+    - Wait for Magisk to finish install (will get notification) and then in notifications open Magisk and do reboot.
     - Select Magisk in notifications and allow to update and reboot.
 12. Enable **Developer access** again
 13. Enable APK install `*#*#2880#*#*`
@@ -57,18 +58,18 @@ Needed for WhatsApp and Uber (in-browser) to work
 3. make font in tcl flip largest (Settings -> Display -> Font size -> Largest)
 4. Make menu a list (Settings -> Display -> Menu layout -> List)
 
-### 4. Uber (in-browser)
+### 4. Uber (in-browser) and WhatsApp
 
-- Run `adb install uber-repo.apk`
-- Make "Uber" app the shortcut for right keypad (Settings -> Phone Settings -> Key shortcuts)
-- Confirm right keypad opens uber in browser
-
-### 5. WhatsApp
-
-1. Download WhatsApp apk into this project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing).
+1. Download WhatsApp apk into this project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing). You only have to do this once
 2. Install WhatsApp via `adb install WhatsApp.apk`.
-3. Make "WhatsApp" app the shortcut for left keypad (Settings -> Phone Settings -> Key shortcuts)
-4. Confirm left keypad opens WhatsApp
+3. Install Uber via `adb install uber-repo.apk`
+4. Make "Uber" app the shortcut for right keypad (Settings -> Phone Settings -> Key shortcuts).
+
+- Go to keypad, hit "set", then the app, then save
+
+5. Make "WhatsApp" app the shortcut for left keypad (Settings -> Phone Settings -> Key shortcuts)
+
+6. Confirm they both open via left and right keypad on homepage
 
 ### Helpful links for how I figured out how to do these things
 
