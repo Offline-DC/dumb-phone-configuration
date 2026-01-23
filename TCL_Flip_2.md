@@ -2,7 +2,7 @@
 
 This document tracks working solutions for installing apps and getting developer/root access to the TCL Flip 2. Since this phone is built off of android
 
-## Setup
+## 1. Setup
 
 1. Install Homebrew
 
@@ -13,18 +13,10 @@ This document tracks working solutions for installing apps and getting developer
 2. Install adb
 
 ```bash
-   brew install android-platform-tools
+brew install android-platform-tools
 ```
 
-### Developer access
-
-1. Enable USB debugging
-   - dial `*#*#DEBUG#*#*`
-2. Plug in phone to computer
-3. Confirm shows up via `adb devices`
-4. Allow computer access via phone. If you don't see this option, restart phone and try adb devices again.
-
-### To allow app installation:
+### 2. To allow app installation:
 
 1. Follow steps for **Developer access**
 2. In command window `adb shell settings put global development_settings_enabled 1`
@@ -46,7 +38,7 @@ This document tracks working solutions for installing apps and getting developer
 11. Enable **Developer access** again
 12. Enable APK install `*#*#2880#*#*`
 
-### To get higher resolution
+### 3. To get higher resolution
 
 Needed for WhatsApp and Uber (in-browser) to work
 
@@ -57,7 +49,7 @@ Needed for WhatsApp and Uber (in-browser) to work
 4. make font in tcl flip largest
 5. Make menu a list
 
-### Uber (in-browser)
+### 4. Uber (in-browser)
 
 - follow the **get higher resolution** steps
 - in browser go to m.uber.com
@@ -65,7 +57,7 @@ Needed for WhatsApp and Uber (in-browser) to work
 - enter phone #, verify, then password
 - Install apk from [here](https://github.com/Offline-DC/uber-launcher-android) and make it a key shortcut
 
-### WhatsApp
+### 5. WhatsApp
 
 1. Follow steps **To allow app installation** and **To get higher resolution**
 2. Install APK via `adb install WhatsApp.apk`
@@ -79,6 +71,10 @@ https://www.reddit.com/r/dumbphones/comments/17aen23/comment/k5ethjg/
 https://gist.github.com/neutronscott/2e4179af74c2fadec101a184fbb6a89e
 https://github.com/neutronscott/flip2/wiki
 
-```
+### Developer access
 
-```
+1. Enable USB debugging
+   - dial `*#*#DEBUG#*#*`
+2. Plug in phone to computer
+3. Confirm shows up via `adb devices`
+4. Allow computer access via phone. If you don't see this option, restart phone and try adb devices again.
