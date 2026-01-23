@@ -54,7 +54,7 @@ Needed for WhatsApp and Uber (in-browser) to work
 1. Enable **Developer access**
 2. Higher resolution via `adb shell wm density 120`
    - You must do this or WhatsApp QR code won't work
-3. Install WhatsApp via `adb install WhatsApp.spk`
+3. Install WhatsApp via `adb install WhatsApp.apk`. Download apk into project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing).
 4. make font in tcl flip largest
 5. Make menu a list
 
