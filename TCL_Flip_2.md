@@ -4,6 +4,8 @@ This document tracks working solutions for installing apps and getting developer
 
 ## 1. Setup
 
+Do setup in terminal:
+
 1. Install Homebrew
 
 ```
@@ -18,7 +20,7 @@ brew install android-platform-tools
 
 ### 2. To allow app installation:
 
-1. Follow steps for **Developer access**
+1. On TCL Flip 2, follow steps for **Developer access**
 2. In command window `adb shell settings put global development_settings_enabled 1`
 3. Unplug TCL from computer and turn off
 4. Run `./example.sh` (worked on Mac or Linux)
