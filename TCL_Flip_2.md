@@ -53,26 +53,22 @@ Needed for WhatsApp and Uber (in-browser) to work
 
 1. Enable **Developer access**
 2. Higher resolution via `adb shell wm density 120`
-   - You must do this or WhatsApp QR code won't work
-3. Download WhatsApp apk into this project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing).
-4. Install WhatsApp via `adb install WhatsApp.apk`.
-5. make font in tcl flip largest
-6. Make menu a list
+   - You must do this or WhatsApp QR code & Uber won't work
+3. make font in tcl flip largest (Settings -> Display -> Font size -> Largest)
+4. Make menu a list (Settings -> Display -> Menu layout -> List)
 
 ### 4. Uber (in-browser)
 
-- follow the **get higher resolution** steps
-- in browser go to m.uber.com
-- use mouse to go to login
-- enter phone #, verify, then password
-- Install apk from [here](https://github.com/Offline-DC/uber-launcher-android) and make it a key shortcut
+- Run `adb install uber-repo.apk`
+- Make "Uber" app the shortcut for right keypad (Settings -> Phone Settings -> Key shortcuts)
+- Confirm right keypad opens uber in browser
 
 ### 5. WhatsApp
 
-1. Follow steps **To allow app installation** and **To get higher resolution**
-2. Install APK via `adb install WhatsApp.apk`
-3. Make app a Shortcut on TCL (because it doesn't show up in launch icons)
-4. During setup, do NOT enter phone number, link companion device
+1. Download WhatsApp apk into this project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing).
+2. Install WhatsApp via `adb install WhatsApp.apk`.
+3. Make "WhatsApp" app the shortcut for left keypad (Settings -> Phone Settings -> Key shortcuts)
+4. Confirm left keypad opens WhatsApp
 
 ### Helpful links for how I figured out how to do these things
 
