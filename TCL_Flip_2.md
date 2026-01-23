@@ -78,5 +78,5 @@ https://github.com/neutronscott/flip2/wiki
 1. Enable USB debugging
    - dial `*#*#DEBUG#*#*`
 2. Plug in phone to computer
-3. Confirm shows up via `adb devices`
-4. Allow computer access via phone. If you don't see this option, restart phone and try adb devices again.
+3. Run `adb devices`
+4. Always allow USB debugging
