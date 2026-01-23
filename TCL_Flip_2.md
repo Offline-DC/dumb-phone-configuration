@@ -39,13 +39,14 @@ python3 -m pip install --user pyserial
 8. Reboot phone
    - `fastboot reboot`
 9. Connect to wifi
-10. Install Magisk
+10. Finish setup and restart phone at home page
+11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
     - Select Magisk and allow to download full version.
       - **NOTE**: Magisk may not show up on the first boot or sometimes you cannot install APKs later. It's a timing issue with `ro.vendor.tct.endurance` getting set. Just reboot.
     - Select Magisk in notifications and allow to update and reboot.
-11. Enable **Developer access** again
-12. Enable APK install `*#*#2880#*#*`
+12. Enable **Developer access** again
+13. Enable APK install `*#*#2880#*#*`
 
 ### 3. To get higher resolution
 
