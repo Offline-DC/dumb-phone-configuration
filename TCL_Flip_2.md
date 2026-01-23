@@ -43,7 +43,6 @@ python3 -m pip install --user pyserial
 11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
     - Select Magisk and allow to download full version.
-      - **NOTE**: Magisk may not show up on the first boot or sometimes you cannot install APKs later. It's a timing issue with `ro.vendor.tct.endurance` getting set. Just reboot.
     - Select Magisk in notifications and allow to update and reboot.
 12. Enable **Developer access** again
 13. Enable APK install `*#*#2880#*#*`
