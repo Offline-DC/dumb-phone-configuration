@@ -2,6 +2,20 @@
 
 This document tracks working solutions for installing apps and getting developer/root access to the TCL Flip 2. Since this phone is built off of android
 
+## Setup
+
+1. Install Homebrew
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+2. Install adb
+
+```bash
+   brew install android-platform-tools
+```
+
 ### Developer access
 
 1. Enable USB debugging
@@ -64,3 +78,7 @@ https://imgur.com/a/rooting-tcl-flip-2-dummies-yT5hbCm
 https://www.reddit.com/r/dumbphones/comments/17aen23/comment/k5ethjg/
 https://gist.github.com/neutronscott/2e4179af74c2fadec101a184fbb6a89e
 https://github.com/neutronscott/flip2/wiki
+
+```
+
+```
