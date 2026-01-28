@@ -6,7 +6,7 @@ This document tracks working solutions for installing apps and getting developer
 
 Do setup in terminal:
 
-1. Install Homebrew
+1. Install Homebrew in your Terminal. Terminal is an app on your mac.
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -26,7 +26,7 @@ python3 -m pip install --user pyserial
 
 ### 2. To allow app installation:
 
-1. On TCL Flip 2, follow steps for **Developer access**
+1. On TCL Flip 2, follow steps for **Developer access** [here](#4-uber-in-browser-and-whatsapp) (at the bottom of these instructions)
 2. In command window `adb shell settings put global development_settings_enabled 1`
 3. Unplug TCL from computer and turn off
 4. Run `./example.sh` (worked on Mac or Linux)
