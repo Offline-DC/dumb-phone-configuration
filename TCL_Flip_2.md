@@ -4,21 +4,28 @@ This document tracks working solutions for installing apps and getting developer
 
 ## 1. Setup
 
-Do setup in terminal:
+Do setup in terminal. Terminal is an app on your mac.
 
-1. Install Homebrew in your Terminal. Terminal is an app on your mac.
+1. clone this repository and go into it:
+```bash
+git clone https://github.com/Offline-DC/dumb-phone-configuration.git
+
+cd dumb-phone-configuration
+```
+
+2. Install Homebrew in your Terminal. 
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-2. Install adb
+3. Install adb
 
 ```bash
 brew install android-platform-tools
 ```
 
-3. Install serial package:
+4. Install serial package:
 
 ```bash
 python3 -m pip install --user pyserial
