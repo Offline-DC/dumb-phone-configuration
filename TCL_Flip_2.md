@@ -46,7 +46,7 @@ python3 -m pip install --user pyserial
 8. Reboot phone
    - Run command `fastboot reboot`
 9. Connect to wifi
-10. Finish setup and rest rt phone at home page
+10. Finish setup and restart phone at home page
 11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
     - Do Magisk install
