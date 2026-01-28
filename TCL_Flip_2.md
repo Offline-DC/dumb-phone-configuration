@@ -46,7 +46,7 @@ python3 -m pip install --user pyserial
 8. Reboot phone
    - Run command `fastboot reboot`
 9. Connect to wifi
-10. Finish setup and restart phone at home page
+10. Finish setup and rest rt phone at home page
 11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
     - Do Magisk install
@@ -88,7 +88,7 @@ https://github.com/neutronscott/flip2/wiki
 ### Developer access
 
 1. Enable USB debugging
-   - dial `*#*#DEBUG#*#*`
+   - dial `*#*#33284#*#*`
 2. Plug in phone to computer
 3. Run `adb devices`
 4. Always allow USB debugging
