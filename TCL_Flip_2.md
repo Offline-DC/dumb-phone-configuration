@@ -29,7 +29,7 @@ python3 -m pip install --user pyserial
 1. On TCL Flip 2, follow steps for **Developer access** [here](#4-uber-in-browser-and-whatsapp) (at the bottom of these instructions)
 2. In command window `adb shell settings put global development_settings_enabled 1`
 3. Unplug TCL from computer and turn off
-4. Run `./example.sh` (worked on Mac or Linux)
+4. Run `./example.sh` in command window (Mac or Linux)
 5. Plug TCL back in
 6. Unlock the bootloader to allow modified boot partition
    - `fastboot flashing unlock`
