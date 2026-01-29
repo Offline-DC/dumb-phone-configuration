@@ -7,13 +7,14 @@ This document tracks working solutions for installing apps and getting developer
 Do setup in terminal. Terminal is an app on your mac.
 
 1. clone this repository and go into it:
+
 ```bash
 git clone https://github.com/Offline-DC/dumb-phone-configuration.git
 
 cd dumb-phone-configuration
 ```
 
-2. Install Homebrew in your Terminal. 
+2. Install Homebrew in your Terminal.
 
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -46,6 +47,7 @@ python3 -m pip install --user pyserial
 8. Reboot phone
    - Run command `fastboot reboot`
 9. Connect to wifi
+   - GA Wifi Password: `3WJs72unEDFgDHPwjA72`
 10. Finish setup and restart phone at home page
 11. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
