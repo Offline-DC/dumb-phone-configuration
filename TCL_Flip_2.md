@@ -44,7 +44,7 @@ python3 -m pip install --user pyserial
 2. In command window `adb shell settings put global development_settings_enabled 1`
 3. Unplug TCL from computer and turn off
 4. Run `./example.sh` in command window (Mac or Linux)
-5. Plug TCL back on
+5. Plug TCL back in
 6. Unlock the bootloader to allow modified boot partition
    - Run command `fastboot flashing unlock`
    - Then, hit Volume up on TCL
