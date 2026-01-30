@@ -45,23 +45,22 @@ python3 -m pip install --user pyserial
 3. Unplug TCL from computer and turn off
 4. Run `./example.sh` in command window (Mac or Linux)
 5. Plug TCL back in
-6. Unlock the bootloader to allow modified boot partition
-   - Run command `fastboot flashing unlock`
-   - Then, hit Volume up on TCL
-7. Flash boot partition
-   - Run command `fastboot flash boot neutron.img`
-8. Reboot phone
-   - Run command `fastboot reboot`
-9. Connect to wifi
-   - GA Wifi Password: `3WJs72unEDFgDHPwjA72`
-10. Finish setup and restart phone at home page
-11. Install Magisk
+6. Run command `fastboot flashing unlock`
+7. hit Volume up on TCL
+8. Run command `fastboot flash boot neutron.img`
+9. Run command `fastboot reboot`
+10. Connect to wifi
+
+- GA Wifi Password: `3WJs72unEDFgDHPwjA72`
+
+11. Finish setup and restart phone at home page
+12. Install Magisk
     - Dial `*#*#217703#*#*` to bring up list of apps
     - Do Magisk install
     - Wait for Magisk to finish install (will get notification) and then in notifications open Magisk and do reboot.
     - Select Magisk in notifications and allow to update and reboot.
-12. Enable **Developer access** again
-13. Enable APK install `*#*#2880#*#*`
+13. Enable **Developer access** again
+14. Enable APK install `*#*#2880#*#*`
 
 ### 3. To get higher resolution
 
