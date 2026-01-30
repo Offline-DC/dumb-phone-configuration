@@ -20,13 +20,15 @@ cd dumb-phone-configuration
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-3. Install adb
+3. Close and Reopen Terminal app
+
+4. Install adb
 
 ```bash
 brew install android-platform-tools
 ```
 
-4. Install serial package:
+5. Install serial package:
 
 ```bash
 python3 -m pip install --user pyserial
