@@ -20,7 +20,11 @@ cd dumb-phone-configuration
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-3. Close and Reopen Terminal app
+3. Close and Reopen Terminal app, then run:
+
+```bash
+cd dumb-phone-configuration # or whatever gets you back to your repo
+```
 
 4. Install adb
 
