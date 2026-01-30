@@ -66,11 +66,10 @@ python3 -m pip install --user pyserial
 
 Needed for WhatsApp and Uber (in-browser) to work
 
-1. Enable **Developer access**
-2. Higher resolution via `adb shell wm density 120`
+1. Higher resolution via `adb shell wm density 120`
    - You must do this or WhatsApp QR code & Uber won't work
-3. make font in tcl flip largest (Settings -> Display -> Font size -> Largest)
-4. Make menu a list (Settings -> Display -> Menu layout -> List)
+2. make font in tcl flip largest (Settings -> Display -> Font size -> Largest)
+3. Make menu a list (Settings -> Display -> Menu layout -> List)
 
 ### 4. Uber (in-browser) and WhatsApp
 
