@@ -1,0 +1,6 @@
+id=tclprovision
+name=TCL Flip 2 Provisioner
+version=1.0
+versionCode=1
+author=Jack
+description=First-boot provisioning (density, apps, disable stock launcher)
