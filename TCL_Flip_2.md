@@ -42,47 +42,106 @@ python3 -m pip install --user pyserial
 
 1. On TCL Flip 2, follow steps for **Developer access** [here](#4-uber-in-browser-and-whatsapp) (at the bottom of these instructions)
 2. In command window `adb shell settings put global development_settings_enabled 1`
-3. Unplug TCL from computer and turn off
-4. Run `./example.sh` in command window (Mac or Linux)
-5. Plug TCL back in
+3. `adb shell reboot -p`
+4. Unplug TCL let turn completely off
+5. Run `./example.sh` in command window (Mac or Linux) then plug TCL back in
 6. Run command `fastboot flashing unlock`
 7. hit Volume up on TCL
 8. Run command `fastboot flash boot neutron.img`
 9. Run command `fastboot reboot`
-10. Connect to wifi
-
-- GA Wifi Password: `3WJs72unEDFgDHPwjA72`
-
-11. Finish setup and restart phone at home page
-12. Install Magisk
-    - Dial `*#*#217703#*#*` to bring up list of apps
-    - Do Magisk install
-    - Wait for Magisk to finish install (will get notification) and then in notifications open Magisk and do reboot.
-    - Select Magisk in notifications and allow to update and reboot.
-13. Enable **Developer access** again
-14. Enable APK install `*#*#2880#*#*`
+10. Go through initial setup screens, skip WiFi step
+11. Enable **Developer access** again
+12. `adb shell reboot`
+13. Wait till back on then `adb shell`
+14. `su`
+15. Follow instructions on phone to grant user root access
+16. Wait for Magisk to finish install (will get notification) and then in notifications open Magisk and do reboot.
 
 ### 3. To get higher resolution
 
 Needed for WhatsApp and Uber (in-browser) to work
 
-1. Higher resolution via `adb shell wm density 120`
-   - You must do this or WhatsApp QR code & Uber won't work
-2. make font in tcl flip largest (Settings -> Display -> Font size -> Largest)
-3. Make menu a list (Settings -> Display -> Menu layout -> List)
+Higher resolution via `adb shell wm density 120`
+
+- You must do this or WhatsApp QR code & Uber won't work
 
 ### 4. Uber (in-browser) and WhatsApp
 
 1. Download WhatsApp apk into this project folder. Apk is [here](https://drive.google.com/file/d/1ESycIkwHVfv1qAAAnN4bpryRL3h_HSpN/view?usp=sharing). You only have to do this once
 2. Install WhatsApp via `adb install WhatsApp.apk`.
 3. Install Uber via `adb install uber-repo.apk`
-4. Make "Uber" app the shortcut for right keypad (Settings -> Phone Settings -> Key shortcuts).
 
-- Go to keypad, hit "set", then the app, then save
+### BETA-INSTRUCTIONS
 
-5. Make "WhatsApp" app the shortcut for left keypad (Settings -> Phone Settings -> Key shortcuts)
+1. Download vMouse and install (run one at a time):
 
-6. Confirm they both open via left and right keypad on homepage
+```bash
+adb push FlipMouse.zip /sdcard/Download
+adb shell
+su ## Then follow dialogue to grant access
+# if needed: adb shell am start -n com.topjohnwu.magisk/.ui.MainActivity
+magisk --install-module /sdcard/Download/FlipMouse.zip
+
+# Instructions for removing star shortcut to favorites
+adb shell
+su
+mkdir -p /data/adb/modules/keyremap/system/usr/keylayout
+cd /data/adb/modules/keyremap
+cat > module.prop <<EOF
+id=keyremap
+name=Key Remap
+version=1.0
+versionCode=1
+author=Custom
+description=Remap Favorite Contacts key so it no longer launches Contacts
+EOF
+cp /system/usr/keylayout/matrix-keypad.kl system/usr/keylayout/
+sed -i 's/FAVORITE_CONTACTS/FOCUS/' system/usr/keylayout/matrix-keypad.kl
+chmod -R 755 /data/adb/modules/keyremap
+reboot
+```
+
+2. Install apps
+
+```bash
+adb install apk/WhatsApp.apk
+adb install apk/uber-repo.apk
+adb install apk/launcher.apk
+adb install-multiple \
+   apk/openbubbles/base.apk \
+   apk/openbubbles/split_config.armeabi_v7a.apk \
+   apk/openbubbles/split_config.en.apk \
+   apk/openbubbles/split_config.ldpi.apk
+adb install apk/googlemaps/maps.apk
+adb install apk/apple-music.apk
+adb install-multiple \
+   apk/contacticloudsync/base.apk \
+   apk/contacticloudsync/split_config.armeabi_v7a.apk \
+   apk/contacticloudsync/split_config.en.apk \
+   apk/contacticloudsync/split_config.ldpi.apk
+adb install apk/azure-authenticator.apk
+```
+
+3. Select launcher (run one at a time)
+
+```bash
+adb shell am start -a android.settings.HOME_SETTINGS
+## after this select Mini List Launcher
+adb shell pm disable-user --user 0 com.android.launcher3
+adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS
+# After this allow notification access
+```
+
+4. Reboot `adb reboot`
+
+5. [Self-host open bubbles quick start](https://openbubbles.app/quickstart.html)
+
+- Go through to scanning on the phone.
+- Turn off foreground service:
+  - `adb shell am start -a android.settings.APP_NOTIFICATION_SETTINGS \
+--es android.provider.extra.APP_PACKAGE com.openbubbles.messaging`
+
+6. Disa
 
 ### Helpful links for how I figured out how to do these things
 
@@ -90,6 +149,7 @@ https://imgur.com/a/rooting-tcl-flip-2-dummies-yT5hbCm
 https://www.reddit.com/r/dumbphones/comments/17aen23/comment/k5ethjg/
 https://gist.github.com/neutronscott/2e4179af74c2fadec101a184fbb6a89e
 https://github.com/neutronscott/flip2/wiki
+https://www.reddit.com/r/dumbphones/comments/1756fqz/tcl_flip_2_virtual_mouse/
 
 ### Developer access
 
