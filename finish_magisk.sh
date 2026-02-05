@@ -24,8 +24,6 @@ done
 echo "boot_completed=1"
 
 echo
-echo "== ACTION REQUIRED =="
-echo "Finish any Android setup screens on the phone."
 echo
 read -r -p "Press ENTER once you are fully at the home screen... " _
 

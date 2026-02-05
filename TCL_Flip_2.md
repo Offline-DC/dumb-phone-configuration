@@ -18,7 +18,7 @@ python3 -m pip install --user pyserial
 
 ### 1. Run the install steps
 
-Run the below scripts one at a time. You can repeat steps as needed if there are issues:
+Run the below scripts one at a time:
 
 ```bash
 ./flash_root.sh
@@ -28,7 +28,7 @@ Run the below scripts one at a time. You can repeat steps as needed if there are
 # Automate wifi setup
 # Optional but helps automate wifi adding
 ./wifi_1_install_ime.sh
-./wifi_2_connect.sh "YourSSID" "YourPassword"
+./wifi_2_connect.sh "YourSSID" "YourPassword" # Replace with your wifi/password
 ./wifi_3_cleanup.sh
 
 ./finish_magisk.sh
