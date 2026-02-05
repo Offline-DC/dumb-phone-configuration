@@ -1,31 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BOOT_IMG="${1:-neutron.img}"
+BOOT_IMG="neutron.img"
 
 echo "== TCL Flip 2: flash_root =="
 echo "Using boot image: $BOOT_IMG"
 echo
 
-echo "[0/9] Checking ADB connection status..."
-adb wait-for-device || true
-
-ADB_STATE=$(adb devices | awk 'NR==2 {print $2}')
-
-if [[ "$ADB_STATE" != "device" ]]; then
-  echo
-  echo "== ACTION REQUIRED =="
-  echo "Developer access is not currently authorized."
-  echo "On the phone:"
-  echo "  Dial *#*#33284#*#*"
-  echo "  Turn USB Debugging ON"
-  echo "  Accept the ADB authorization prompt"
-  echo
-  read -r -p "Press ENTER once USB debugging is enabled and authorized... " _
-  adb wait-for-device
-else
-  echo "ADB already authorized ✔"
-fi
+echo "[0/9] Waiting for authorized ADB..."
+./adb_wait_authorized.sh
 
 echo
 echo "[1/9] Waiting for ADB device..."
@@ -73,6 +56,6 @@ echo
 echo "[8/9] Rebooting..."
 fastboot reboot
 
-echo
-echo "[9/9] Done. Let the phone boot to Android setup."
-echo "Next: run ./finish_magisk.sh"
+say "flash_root complete."
+echo "Let the phone finish booting into Android setup."
+echo "Get through initial setup screens, skip wifi, let carrier switch, and wait until you're at the home screen. Then you can continue with the next step."

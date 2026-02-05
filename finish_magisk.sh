@@ -1,32 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ZIP_PATH="${1:-tclprovision.zip}"
+ZIP_PATH="tclprovision.zip"
 
 echo "== TCL Flip 2: finish_magisk =="
 echo "Provisioner zip: $ZIP_PATH"
 echo
 
-echo "[0/9] Checking ADB connection status..."
-
-adb wait-for-device || true
-
-ADB_STATE=$(adb devices | awk 'NR==2 {print $2}')
-
-if [[ "$ADB_STATE" != "device" ]]; then
-  echo
-  echo "== ACTION REQUIRED =="
-  echo "Developer access is not currently authorized."
-  echo "On the phone:"
-  echo "  Dial *#*#33284#*#*"
-  echo "  Turn USB Debugging ON"
-  echo "  Accept the ADB authorization prompt"
-  echo
-  read -r -p "Press ENTER once USB debugging is enabled and authorized... " _
-  adb wait-for-device
-else
-  echo "ADB already authorized ✔"
-fi
+echo "[0/9] Waiting for authorized ADB..."
+./adb_wait_authorized.sh
 
 echo
 echo "[1/9] Performing extra reboot to ensure Magisk is fully initialized..."
@@ -44,7 +26,6 @@ echo "boot_completed=1"
 echo
 echo "== ACTION REQUIRED =="
 echo "Finish any Android setup screens on the phone."
-echo "You can SKIP Wi-Fi if you want."
 echo
 read -r -p "Press ENTER once you are fully at the home screen... " _
 
@@ -61,7 +42,7 @@ echo
 echo "== ACTION REQUIRED =="
 echo "On the phone:"
 echo "  • Complete any Magisk setup steps"
-echo "  • Wait for notification that confirms install is done"
+echo "  • WAIT for notification that confirms install is done"
 echo "  • Tap notification and follow instructions to reboot"
 echo
 read -r -p "Press ENTER once Magisk setup is finished and reboot is done, and you're back on the home screen again" _
@@ -77,7 +58,7 @@ done
 echo "boot_completed=1"
 
 echo
-echo "[7/9] Verifying root..."
+echo "[7/9] Verifying root... Press GRANT to allow Magisk to have root access"
 if ! adb shell su -c 'id' | grep -q "uid=0"; then
   echo "Root still not available."
   echo "Open Magisk on the phone, approve prompts, reboot once, then re-run this script."
@@ -86,7 +67,7 @@ fi
 echo "Root OK."
 
 echo
-echo "[8/9] Installing provisioning module..."
+echo "[8/9] Installing provisioning module, please wait..."
 adb push "$ZIP_PATH" /sdcard/ >/dev/null
 adb shell su -c "magisk --install-module /sdcard/$(basename "$ZIP_PATH")"
 
@@ -94,4 +75,4 @@ echo
 echo "[9/9] Rebooting to activate module..."
 adb reboot
 
-echo "Done. After boot: pick launcher + enable notification listener + OpenBubbles pairing."
+echo "Done. After boot: Run final step."
