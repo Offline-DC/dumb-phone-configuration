@@ -28,3 +28,5 @@ adb shell ime set "$ADB_IME" || true
 
 echo "Current IME:"
 adb shell settings get secure default_input_method | tr -d '\r'
+
+echo "Make sure ADB keyboard is the only one selected"
