@@ -96,6 +96,9 @@ else
   echo "Stock launcher package not found (${STOCK_LAUNCHER_PKG}); skipping."
 fi
 
+echo "adjust density"
+adb shell wm density 120
+
 # TODO – add open bubbles setup
 # echo "Opening OpenBubbles notification settings"
 # if pkg_installed "${OPENBUBBLES_PKG}"; then
