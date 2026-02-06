@@ -27,9 +27,7 @@ Run the below scripts one at a time:
 
 # Automate wifi setup
 # Optional but helps automate wifi adding
-./wifi_1_install_ime.sh
-./wifi_2_connect.sh "YourSSID" "YourPassword" # Replace with your wifi/password
-./wifi_3_cleanup.sh
+./wifi_install.sh "YourSSID" "YourPassword" # Replace with your wifi/password
 
 ./finish_magisk.sh
 
