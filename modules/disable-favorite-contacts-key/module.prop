@@ -1,0 +1,6 @@
+id=disable_favorite_contacts_key
+name=Disable Favorite Contacts Key
+version=1.0
+versionCode=1
+author=Offline
+description=Overrides matrix-keypad.kl to remap key 138 from FAVORITE_CONTACTS to FOCUS (disables built-in Favorite Contacts action).

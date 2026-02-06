@@ -63,14 +63,3 @@ if ! adb shell su -c 'id' | grep -q "uid=0"; then
   exit 1
 fi
 echo "Root OK."
-
-echo
-echo "[8/9] Installing provisioning module, please wait..."
-adb push "$ZIP_PATH" /sdcard/ >/dev/null
-adb shell su -c "magisk --install-module /sdcard/$(basename "$ZIP_PATH")"
-
-echo
-echo "[9/9] Rebooting to activate module..."
-adb reboot
-
-echo "Done. After boot: Run final step."

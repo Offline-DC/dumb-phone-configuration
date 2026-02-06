@@ -14,7 +14,7 @@ brew install android-platform-tools
 python3 -m pip install --user pyserial
 ```
 
-2. Download APK files [here](https://drive.google.com/file/d/1IWL5lCAXYTrEpS8IhKjlE71zMbv-Tywd/view?usp=drive_link) and place them into the folder `tclprovision/apk/`
+2. Download APK files [here](https://drive.google.com/file/d/1IWL5lCAXYTrEpS8IhKjlE71zMbv-Tywd/view?usp=drive_link) and place them into the folder `apk/`
 
 ### 1. Run the install steps
 
@@ -29,7 +29,11 @@ Run the below scripts one at a time:
 # Optional but helps automate wifi adding
 ./wifi_install.sh "YourSSID" "YourPassword" # Replace with your wifi/password
 
-./finish_magisk.sh
+./install_magisk.sh
+
+./add_apks.sh
+
+./add_modules.sh
 
 ./setup_final_manual.sh
 ```
