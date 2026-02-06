@@ -115,4 +115,4 @@ adb shell wm density 120
 # echo "  https://openbubbles.app/quickstart.html"
 # echo "Do the pairing now.
 
-echo "Done ✔"
+echo "Done ✔. Do some testing and then turn off."

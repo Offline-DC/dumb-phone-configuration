@@ -64,11 +64,11 @@ install_apk "WhatsApp"            "$APKDIR/WhatsApp.apk"            || true
 install_apk "Uber"                "$APKDIR/uber-repo.apk"           || true
 install_apk "Launcher"            "$APKDIR/launcher.apk"            || true
 install_apk "Google Maps (lite)"  "$APKDIR/googlemaps/maps.apk"     || true
-install_apk "Apple Music"         "$APKDIR/apple-music.apk"         || true
+# install_apk "Apple Music"         "$APKDIR/apple-music.apk"         || true
 install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 
 # --- Split bundles ---
-install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
+# install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
 install_splits_dir "Contact iCloud Sync" "$APKDIR/contacticloudsync" || true
 
 say "APK install step complete."
