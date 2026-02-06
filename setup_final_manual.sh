@@ -75,14 +75,6 @@ echo "On the phone: set Mini List Launcher as DEFAULT."
 pause
 
 # ------------------------
-# Notification listener access
-# ------------------------
-echo "Opening Notification Listener settings"
-adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
-echo "On the phone: enable notification access for your launcher as needed."
-pause
-
-# ------------------------
 # Disable stock launcher (only after default is set)
 # ------------------------
 echo "Disabling stock launcher: ${STOCK_LAUNCHER_PKG}"
@@ -95,6 +87,14 @@ if pkg_installed "${STOCK_LAUNCHER_PKG}"; then
 else
   echo "Stock launcher package not found (${STOCK_LAUNCHER_PKG}); skipping."
 fi
+
+# ------------------------
+# Notification listener access
+# ------------------------
+echo "Opening Notification Listener settings"
+adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
+echo "On the phone: enable notification access for your launcher as needed."
+pause
 
 echo "adjust density"
 adb shell wm density 120
