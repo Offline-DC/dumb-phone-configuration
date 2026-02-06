@@ -4,7 +4,7 @@ This document tracks working solutions for installing apps and getting developer
 
 ## 0. Prerequisite: Computer setup (Mac)
 
-1. clone this repository and go into it:
+1. clone this repository and go into it. Also make sure you have python with pyserial installed, as well as android platform tools for adb and fastboot:
 
 ```bash
 git clone https://github.com/Offline-DC/dumb-phone-configuration.git
@@ -22,8 +22,6 @@ Run the below scripts one at a time:
 
 ```bash
 ./flash_root.sh
-
-./build_tcl_provision_zip.sh # can skip after doing once
 
 # (Optional) Automate wifi connection
 # Optional but helps automate wifi adding

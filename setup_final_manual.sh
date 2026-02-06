@@ -57,31 +57,27 @@ start_home() {
 # ------------------------
 need_cmd adb
 
-say "Checking adb device connection..."
+echo "Checking adb device connection..."
 adb devices
 
-say "Waiting for device..."
+echo "Waiting for device..."
 adb wait-for-device >/dev/null 2>&1 || true
 
-say "Waiting for Android boot to complete..."
+echo "Waiting for Android boot to complete..."
 wait_for_boot_completed 90
-
-say "Opening HOME (launcher)"
-start_home
-pause
 
 # ------------------------
 # Set default launcher
 # ------------------------
-say "Opening Home settings so you can choose default launcher"
+echo "Opening Home settings so you can choose default launcher"
 adb shell am start -a android.settings.HOME_SETTINGS >/dev/null 2>&1 || true
-echo "On the phone: set your launcher (e.g., Mini List Launcher) as DEFAULT."
+echo "On the phone: set Mini List Launcher as DEFAULT."
 pause
 
 # ------------------------
 # Notification listener access
 # ------------------------
-say "Opening Notification Listener settings"
+echo "Opening Notification Listener settings"
 adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
 echo "On the phone: enable notification access for your launcher as needed."
 pause
@@ -89,7 +85,7 @@ pause
 # ------------------------
 # Disable stock launcher (only after default is set)
 # ------------------------
-say "Disabling stock launcher: ${STOCK_LAUNCHER_PKG}"
+echo "Disabling stock launcher: ${STOCK_LAUNCHER_PKG}"
 if pkg_installed "${STOCK_LAUNCHER_PKG}"; then
   if adb shell pm disable-user --user 0 "${STOCK_LAUNCHER_PKG}" >/dev/null 2>&1; then
     echo "Disabled ${STOCK_LAUNCHER_PKG} ✔"
@@ -100,23 +96,20 @@ else
   echo "Stock launcher package not found (${STOCK_LAUNCHER_PKG}); skipping."
 fi
 
-# ------------------------
-# OpenBubbles pairing + notification channel settings
-# ------------------------
-say "(Optional) OpenBubbles setup"
-echo "Follow pairing instructions here:"
-echo "  https://openbubbles.app/quickstart.html"
-echo "Do the pairing now."
-pause
+# TODO – add open bubbles setup
+# echo "Opening OpenBubbles notification settings"
+# if pkg_installed "${OPENBUBBLES_PKG}"; then
+#   adb shell am start -a android.settings.APP_NOTIFICATION_SETTINGS \
+#     --es android.provider.extra.APP_PACKAGE "${OPENBUBBLES_PKG}" >/dev/null 2>&1 || true
+#   echo "On the phone: disable the Foreground Service notification channel for OpenBubbles (if present)."
+# else
+#   echo "OpenBubbles not installed (${OPENBUBBLES_PKG}); skipping notification settings."
+# fi
+# pause
 
-say "Opening OpenBubbles notification settings"
-if pkg_installed "${OPENBUBBLES_PKG}"; then
-  adb shell am start -a android.settings.APP_NOTIFICATION_SETTINGS \
-    --es android.provider.extra.APP_PACKAGE "${OPENBUBBLES_PKG}" >/dev/null 2>&1 || true
-  echo "On the phone: disable the Foreground Service notification channel for OpenBubbles (if present)."
-else
-  echo "OpenBubbles not installed (${OPENBUBBLES_PKG}); skipping notification settings."
-fi
-pause
+# echo "(Optional) OpenBubbles setup"
+# echo "Follow pairing instructions here:"
+# echo "  https://openbubbles.app/quickstart.html"
+# echo "Do the pairing now.
 
-say "Done ✔"
+echo "Done ✔"

@@ -32,5 +32,5 @@ adb wait-for-device >/dev/null 2>&1 || true
 
 echo "Waiting for Android boot to complete..."
 
-echo "Done. After fully on, run remaining script"
+echo "Done. Wait until phone is fully on before running additional scripts"
 

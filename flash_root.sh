@@ -58,4 +58,4 @@ fastboot reboot
 
 say "flash_root complete."
 echo "Let the phone finish booting into Android setup."
-echo "Get through initial setup screens, skip wifi, let carrier switch, and wait until you're at the home screen. Then you can continue with the next step."
+echo "Get through initial setup screens, skip wifi, let carrier switch (if SIM), and wait until you're at the home screen. Then you can continue with the next step."

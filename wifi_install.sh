@@ -147,4 +147,4 @@ fi
 say "Uninstalling ADBKeyboard..."
 adb uninstall "$ADB_PKG" >/dev/null 2>&1 || true
 
-say "Done."
+say "Done. Finish setting up Wifi and continue"
