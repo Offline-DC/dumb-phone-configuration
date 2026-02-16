@@ -14,7 +14,7 @@ brew install android-platform-tools
 python3 -m pip install --user pyserial
 ```
 
-2. Download APK files [here](https://drive.google.com/file/d/1IWL5lCAXYTrEpS8IhKjlE71zMbv-Tywd/view?usp=drive_link). Unzip and place them into the folder `apk/`
+2. Download APK files [here](https://drive.google.com/file/d/1-NKsyu-QicYRtTOZXG2yWKrFmKFPoKOx/view?usp=sharing). Unzip and place them into the folder `apk/`
 
 ### 1. Run the install steps
 
