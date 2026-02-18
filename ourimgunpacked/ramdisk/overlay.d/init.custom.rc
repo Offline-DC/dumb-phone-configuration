@@ -1,0 +1,4 @@
+on init
+  setprop neutron.build 2024-09-18T00:02
+on post-fs-data
+  exec u:r:magisk:s0 root root -- ${MAGISKTMP}/magisk resetprop -n ro.vendor.tct.endurance true
