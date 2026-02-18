@@ -55,24 +55,18 @@ start_home() {
 # ------------------------
 # Start
 # ------------------------
-need_cmd adb
-
-echo "Checking adb device connection..."
-adb devices
-
 echo "Waiting for device..."
 adb wait-for-device >/dev/null 2>&1 || true
 
-echo "Waiting for Android boot to complete..."
-wait_for_boot_completed 90
+echo "Waiting for boot/services..."
+until adb shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
+  sleep 1
+done
 
-# ------------------------
-# Set default launcher
-# ------------------------
-echo "Opening Home settings so you can choose default launcher"
-adb shell am start -a android.settings.HOME_SETTINGS >/dev/null 2>&1 || true
-echo "On the phone: set Mini List Launcher as DEFAULT."
-pause
+# Extra: wait until InputManagerService is published
+until adb shell 'service check input >/dev/null 2>&1' >/dev/null 2>&1; do
+  sleep 1
+done
 
 # ------------------------
 # Disable stock launcher (only after default is set)
@@ -88,13 +82,33 @@ else
   echo "Stock launcher package not found (${STOCK_LAUNCHER_PKG}); skipping."
 fi
 
+echo "opening launcher"
+adb shell monkey -p com.offlineinc.dumbdownlauncher -c android.intent.category.LAUNCHER 1
+sleep 3
+
 # ------------------------
 # Notification listener access
 # ------------------------
-echo "Opening Notification Listener settings"
+LAUNCHER_PKG="com.offlineinc.dumbdownlauncher"
+
+echo "Opening Notification Listener settings..."
 adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
-echo "On the phone: enable notification access for your launcher as needed."
-pause
+
+echo -n "Waiting for notification access for $LAUNCHER_PKG"
+
+# Wait until enabled_notification_listeners includes your package
+while true; do
+  enabled="$(adb shell settings get secure enabled_notification_listeners 2>/dev/null | tr -d '\r' || true)"
+
+  if echo "$enabled" | grep -Fq "$LAUNCHER_PKG"; then
+    echo " ✓"
+    echo "Notification access granted."
+    break
+  fi
+
+  echo -n "."
+  sleep 1
+done
 
 echo "adjust density"
 adb shell wm density 120
@@ -116,3 +130,5 @@ adb shell wm density 120
 # echo "Do the pairing now.
 
 echo "Done ✔. Do some testing and then turn off."
+
+adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true

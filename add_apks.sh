@@ -5,7 +5,13 @@ say(){ echo; echo "==> $*"; }
 
 APKDIR="./apk"
 
-adb wait-for-device >/dev/null 2>&1 || true
+echo "Waiting for device... Make sure to allow debugging after startup"
+adb wait-for-device
+
+echo "Waiting for sys.boot_completed..."
+until adb shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
+  sleep 1
+done
 
 install_apk() {
   local name="$1"
@@ -68,7 +74,7 @@ install_apk "Google Maps (lite)"  "$APKDIR/googlemaps/maps.apk"     || true
 install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 
 # --- Split bundles ---
-# install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
+install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
 install_splits_dir "Contact iCloud Sync" "$APKDIR/contacticloudsync" || true
 
 say "APK install step complete."

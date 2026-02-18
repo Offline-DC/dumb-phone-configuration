@@ -23,9 +23,9 @@ Run the below scripts one at a time:
 ```bash
 ./flash_root.sh
 
-# (Optional) Automate wifi connection
-# Optional but helps automate wifi adding
-./wifi_install.sh "YourSSID" "YourPassword" # Replace with your wifi/password
+# Add wifi
+# Will prompt for wifi config first time
+./wifi_install.sh
 
 ./install_magisk.sh
 

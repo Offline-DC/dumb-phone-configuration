@@ -24,13 +24,12 @@ echo "Installing key-remap module..."
 adb shell su -c "magisk --install-module '${KEYMOD_REMOTE}'"
 echo "Key-remap install command executed ✔"
 
+adb shell settings put global device_provisioned 1
+adb shell settings put secure user_setup_complete 1
+adb shell settings put secure profile_setup_complete 1 2>/dev/null || true
+
 echo "Rebooting device..."
 adb reboot
 
 echo "Waiting for device..."
 adb wait-for-device >/dev/null 2>&1 || true
-
-echo "Waiting for Android boot to complete..."
-
-echo "Done. Wait until phone is fully on before running additional scripts"
-

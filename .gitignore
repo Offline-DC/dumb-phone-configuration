@@ -1,3 +1,5 @@
 *.apk
 tclprovision.zip
 DisableFavoriteContactsKey.zip
+
+.env
