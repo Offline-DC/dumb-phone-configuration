@@ -6,7 +6,7 @@ if fastboot devices | grep -q .; then
   exit 0
 fi
 
-sudo python3 autobooter.py
+python3 autobooter.py
 a=$?
 
 if [ $a -gt 99 ]; then

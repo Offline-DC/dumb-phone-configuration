@@ -21,19 +21,10 @@ python3 -m pip install --user pyserial
 Run the below scripts one at a time:
 
 ```bash
-./flash_root.sh
 
-# Add wifi
-# Will prompt for wifi config first time
-./wifi_install.sh
+# PETE VERSION:
+./full_flash.sh --version pete
 
-./install_magisk.sh
-
-./add_apks.sh
-
-./add_modules.sh
-
-./setup_final_manual.sh
 ```
 
 **Follow the instructions in the command line throughout**
