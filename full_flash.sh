@@ -40,7 +40,8 @@ if [[ "$VERSION" == "pete" ]]; then
   echo "1) Go through onboarding"
   echo "2) Go to Settings -> Phone Settings -> Key shortcuts, and make LEFT shortcut key WhatsApp, and RIGHT shortcut key Uber"
   echo "3) Go to Settings -> Display -> Menu layout, and select list"
-  echo "4) Final triple check that keys open both apps as expected"
+  echo "4) Go to Settings -> Display -> font size, and select Largest"
+  echo "5) Final triple check that keys open both apps as expected"
   exit 0
 fi
 
