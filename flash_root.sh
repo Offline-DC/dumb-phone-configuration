@@ -8,7 +8,7 @@ echo "Using boot image: $BOOT_IMG"
 echo
 
 echo
-echo "[1/5] Running bootfind.sh to get into fastboot. Plug in your phone now after password..."
+echo "[1/5] Running bootfind.sh to get into fastboot. Make sure phone is turned off and plug it in..."
 ./bootfind.sh
 
 echo
