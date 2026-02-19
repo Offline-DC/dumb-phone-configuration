@@ -43,8 +43,13 @@ if [[ "$VERSION" == "pete" ]]; then
   exit 0
 fi
 
-./wifi_install.sh
-./install_magisk.sh
-./add_apks.sh
-./add_modules.sh
-./setup_final_manual.sh
+if [[ "$VERSION" == "march" ]]; then
+
+  ./wifi_install.sh
+  ./install_magisk.sh
+  ./add_modules.sh
+  ./add_apks.sh
+  ./setup_final_manual.sh
+
+  exit 0
+fi
