@@ -18,7 +18,9 @@ python3 -m pip install --user pyserial
 
 ### 1. Run the install steps
 
-Run the below scripts one at a time:
+1. Make sure phone is turned completely off and plugged in.
+
+2. Run the below script, then plug your phone in.
 
 ```bash
 
