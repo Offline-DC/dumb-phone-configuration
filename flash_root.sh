@@ -1,11 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-BOOT_IMG="neutron.img"
-
-echo "== TCL Flip 2: flash_root =="
-echo "Using boot image: $BOOT_IMG"
-echo
+BOOT_IMG_ONE="original-boot.img"
+BOOT_IMG_FINAL="original-boot-debug.img"
 
 echo
 echo "[1/5] Running bootfind.sh to get into fastboot. Make sure phone is turned off and plug it in..."
@@ -21,20 +18,36 @@ for _i in {1..60}; do
 done
 fastboot devices
 
-echo
-echo "[3/5] Unlocking bootloader (will prompt on phone)..."
-echo "== ACTION REQUIRED =="
-echo "When the prompt appears on the phone, press Volume Up to confirm unlock."
 fastboot flashing unlock || true
 
 echo
-echo "[4/5] Flashing boot image..."
-fastboot flash boot "$BOOT_IMG"
+echo "[3/5] Flashing intermediate image..."
+fastboot flash boot "$BOOT_IMG_ONE"
 
-echo
-echo "[5/5] Rebooting..."
+echo "Powering off device..."
 fastboot reboot
 
-say "flash_root complete."
+echo
+echo "[4/5] Device is off. Run bootfind.sh again to get back into fastboot..."
+./bootfind.sh
+
+echo "Waiting for fastboot device..."
+for _i in {1..60}; do
+  if fastboot devices | grep -q .; then
+    break
+  fi
+  sleep 1
+done
+fastboot devices
+
+fastboot flashing unlock || true
+
+echo
+echo "[5/5] Flashing target image..."
+fastboot flash boot "$BOOT_IMG_FINAL"
+
+echo "Rebooting..."
+fastboot reboot
+
 echo "Let the phone finish booting into Android setup."
 echo "Get through initial setup screens"

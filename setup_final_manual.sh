@@ -130,5 +130,11 @@ adb shell wm density 120
 # echo "Do the pairing now.
 
 echo "Done ✔. Do some testing and then turn off."
-
+echo "Now turn on notifications for mini list launcher and open bubbles"
 adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
+
+# adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
+# adb shell settings put secure accessibility_enabled 1
+# adb shell settings get secure enabled_accessibility_services
+
+# adb shell su -c "magisk --sqlite 'UPDATE policies SET notification=0 WHERE 1'"
