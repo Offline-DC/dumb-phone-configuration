@@ -25,6 +25,8 @@ until adb shell 'pm path android >/dev/null 2>&1' >/dev/null 2>&1; do
   sleep 1
 done
 
+adb shell mkdir -p /sdcard/Download
+
 echo "Building key-remap Magisk module zip..."
 ( cd "${KEYMOD_DIR}" && zip -r "../../${KEYMOD_ZIP}" . >/dev/null )
 
