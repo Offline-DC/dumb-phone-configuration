@@ -113,8 +113,6 @@ done
 echo "adjust density"
 adb shell wm density 120
 
-
-
 # TODO – add open bubbles setup
 # echo "Opening OpenBubbles notification settings"
 # if pkg_installed "${OPENBUBBLES_PKG}"; then

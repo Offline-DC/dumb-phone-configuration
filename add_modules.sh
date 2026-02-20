@@ -29,16 +29,14 @@ echo "Waiting for sdcard..."
 until adb shell 'ls /sdcard' >/dev/null 2>&1; do
   sleep 1
 done
-adb shell mkdir -p /sdcard/Download
 
 echo "Building key-remap Magisk module zip..."
 ( cd "${KEYMOD_DIR}" && zip -r "../../${KEYMOD_ZIP}" . >/dev/null )
 
-echo "Pushing ${FLIPMOUSE_ZIP} to Downloads..."
-adb push "${FLIPMOUSE_LOCAL}" "${FLIPMOUSE_REMOTE}"
-
 echo "Installing FlipMouse module..."
-adb shell su -c "magisk --install-module '${FLIPMOUSE_REMOTE}'"
+adb push FlipMouse.zip /data/local/tmp/FlipMouse.zip
+adb shell su -c "magisk --install-module '/data/local/tmp/FlipMouse.zip'"
+
 echo "FlipMouse install command executed ✔"
 
 echo "Pushing ${KEYMOD_ZIP} to Downloads..."

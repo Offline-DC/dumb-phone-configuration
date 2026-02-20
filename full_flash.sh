@@ -22,6 +22,8 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+git pull
+
 ./flash_root.sh
 
 # PETE version
