@@ -131,6 +131,7 @@ adb shell wm density 120
 
 echo "Done ✔. Do some testing and then turn off."
 echo "Now turn on notifications for mini list launcher and open bubbles"
+
 adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
 
 # adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
