@@ -27,6 +27,9 @@ python3 -m pip install --user pyserial
 # PETE VERSION:
 ./full_flash.sh --version pete
 
+# MARCH VERSION:
+./full_flash.sh --version march
+
 ```
 
 **Follow the instructions in the command line throughout**
