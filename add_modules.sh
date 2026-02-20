@@ -25,6 +25,10 @@ until adb shell 'pm path android >/dev/null 2>&1' >/dev/null 2>&1; do
   sleep 1
 done
 
+echo "Waiting for sdcard..."
+until adb shell 'ls /sdcard' >/dev/null 2>&1; do
+  sleep 1
+done
 adb shell mkdir -p /sdcard/Download
 
 echo "Building key-remap Magisk module zip..."
