@@ -22,7 +22,6 @@ install_apk() {
     return 0
   fi
 
-  say "Installing $name"
   if adb install -r "$path" >/dev/null; then
     echo "PASS  $name"
   else
@@ -54,7 +53,6 @@ install_splits_dir() {
     [[ -n "$f" ]] && splits+=("$f")
   done < <(find "$dir" -maxdepth 1 -type f -name "*.apk" ! -name "base.apk" -print | sort)
 
-  say "Installing $name (splits)"
   if ((${#splits[@]} > 0)); then
     adb install-multiple -r "$base" "${splits[@]}" >/dev/null
   else
@@ -65,12 +63,14 @@ install_splits_dir() {
   echo "PASS  $name"
 }
 
+echo "Installing Apps..."
+
 # --- Single APKs ---
 install_apk "WhatsApp"            "$APKDIR/WhatsApp.apk"            || true
 install_apk "Uber"                "$APKDIR/uber-repo.apk"           || true
 install_apk "Launcher"            "$APKDIR/launcher.apk"            || true
 install_apk "Google Maps (lite)"  "$APKDIR/googlemaps/maps.apk"     || true
-# install_apk "Apple Music"         "$APKDIR/apple-music.apk"         || true
+install_apk "Contact Sync"         "$APKDIR/contact-sync.apk"         || true
 install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 
 # --- Split bundles ---

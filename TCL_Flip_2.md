@@ -14,7 +14,7 @@ brew install android-platform-tools
 python3 -m pip install --user pyserial
 ```
 
-2. Download APK files [here](https://drive.google.com/file/d/1-NKsyu-QicYRtTOZXG2yWKrFmKFPoKOx/view?usp=sharing). Unzip and place them into the folder `apk/`
+2. Download APK files [here](https://drive.google.com/file/d/1C573TRqz1oozGWBFimsxKqb8U3BYYHny/view?usp=sharing). Unzip and place them into the folder `apk/`
 
 ### 1. Run the install steps
 
@@ -24,11 +24,10 @@ python3 -m pip install --user pyserial
 
 ```bash
 
-# PETE VERSION:
-./full_flash.sh --version pete
-
-# MARCH VERSION:
-./full_flash.sh --version march
+# Versions:
+# 0.2.0 Pete version
+# 0.3.0 March Alpha Version
+./full_flash.sh --version "0.3.0"
 
 ```
 

@@ -68,6 +68,13 @@ until adb shell 'service check input >/dev/null 2>&1' >/dev/null 2>&1; do
   sleep 1
 done
 
+# Give launcher root access for accessibility services
+APP_UID=$(adb shell pm list packages -U | grep "package:com.offlineinc.dumbdownlauncher" | tr -d '\r' | grep -o 'uid:[0-9]*' | cut -d: -f2)
+adb shell << EOF
+su -c 'magisk --sqlite "INSERT OR REPLACE INTO policies (uid,policy,until,logging,notification) VALUES($APP_UID,2,0,1,0)"'
+exit
+EOF
+
 # ------------------------
 # Disable stock launcher (only after default is set)
 # ------------------------
@@ -84,57 +91,52 @@ fi
 
 echo "opening launcher"
 adb shell monkey -p com.offlineinc.dumbdownlauncher -c android.intent.category.LAUNCHER 1
-sleep 3
 
 # ------------------------
 # Notification listener access
 # ------------------------
-LAUNCHER_PKG="com.offlineinc.dumbdownlauncher"
-
-echo "Opening Notification Listener settings..."
-adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
-
-echo -n "Waiting for notification access for $LAUNCHER_PKG"
-
-# Wait until enabled_notification_listeners includes your package
-while true; do
-  enabled="$(adb shell settings get secure enabled_notification_listeners 2>/dev/null | tr -d '\r' || true)"
-
-  if echo "$enabled" | grep -Fq "$LAUNCHER_PKG"; then
-    echo " ✓"
-    echo "Notification access granted."
-    break
-  fi
-
-  echo -n "."
-  sleep 1
-done
+adb shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
+adb shell cmd notification allow_listener com.openbubbles.messaging/com.bluebubbles.messaging.services.notifications.NotificationListener
 
 echo "adjust density"
 adb shell wm density 120
 
-# TODO – add open bubbles setup
-# echo "Opening OpenBubbles notification settings"
-# if pkg_installed "${OPENBUBBLES_PKG}"; then
-#   adb shell am start -a android.settings.APP_NOTIFICATION_SETTINGS \
-#     --es android.provider.extra.APP_PACKAGE "${OPENBUBBLES_PKG}" >/dev/null 2>&1 || true
-#   echo "On the phone: disable the Foreground Service notification channel for OpenBubbles (if present)."
-# else
-#   echo "OpenBubbles not installed (${OPENBUBBLES_PKG}); skipping notification settings."
-# fi
-# pause
-
-# echo "(Optional) OpenBubbles setup"
-# echo "Follow pairing instructions here:"
-# echo "  https://openbubbles.app/quickstart.html"
-# echo "Do the pairing now.
-
 echo "Done ✔. Do some testing and then turn off."
 echo "Now turn on notifications for mini list launcher and open bubbles"
 
-adb shell am start -a android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS >/dev/null 2>&1 || true
+adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
+adb shell settings put secure accessibility_enabled 1
+adb shell settings get secure enabled_accessibility_services
 
-adb shell su -c "magisk --sqlite 'UPDATE policies SET notification=0 WHERE 1'"
-# adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
-# adb shell settings put secure accessibility_enabled 1
-# adb shell settings get secure enabled_accessibility_services
+adb shell appops set com.topjohnwu.magisk POST_NOTIFICATION deny
+adb shell 'su -c "sed -i /foreground_service/s/importance=.2./importance=\\\"0\\\"/ /data/system/notification_policy.xml"'
+
+echo "Adding MO contact..."
+
+adb shell content insert --uri content://com.android.contacts/raw_contacts --bind account_type:s: --bind account_name:s:
+ID=$(adb shell content query --uri content://com.android.contacts/raw_contacts --projection _id | tail -1 | grep -o '_id=[0-9]*' | cut -d= -f2)
+echo "Got ID: $ID"
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/name --bind data1:s:MO
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:18446335463 --bind data2:i:2
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:month@offline.community --bind data2:i:1
+
+echo "Adding Dumb Line contact..."
+
+adb shell content insert --uri content://com.android.contacts/raw_contacts --bind account_type:s: --bind account_name:s:
+ID=$(adb shell content query --uri content://com.android.contacts/raw_contacts --projection _id | tail -1 | grep -o '_id=[0-9]*' | cut -d= -f2)
+echo "Got ID: $ID"
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/name --bind data2:s:Dumb --bind data3:s:Line
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:14047163605 --bind data2:i:2
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:support@offline.community --bind data2:i:1
+
+adb reboot
+
+echo "Waiting for device..."
+adb wait-for-device
+
+adb shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
+
+say "ACTION REQUIRED. Go through post launch setup" 
+echo "- In Magisk (opened for your convenience), use Mouse to go to settings gear, and change Superuser Notification to None"
+echo "- In OpenBubbles, go through setup and scan mac QR code"
+echo "- Reboot and retest everything"

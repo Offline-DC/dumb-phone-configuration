@@ -27,7 +27,7 @@ git pull
 ./flash_root.sh
 
 # PETE version
-if [[ "$VERSION" == "pete" ]]; then
+if [[ "$VERSION" == "0.2.0" ]]; then
   echo "Version=pete: running Pete-only install steps and exiting."
 
   echo "Waiting for phone to turn on... and enable debug when the option arises"
@@ -47,7 +47,7 @@ if [[ "$VERSION" == "pete" ]]; then
   exit 0
 fi
 
-if [[ "$VERSION" == "march" ]]; then
+if [[ "$VERSION" == "0.3.0" ]]; then
 
   ./wifi_install.sh
   ./install_magisk.sh

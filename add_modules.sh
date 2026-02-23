@@ -35,6 +35,8 @@ echo "Building key-remap Magisk module zip..."
 
 echo "Installing FlipMouse module..."
 adb push FlipMouse.zip /data/local/tmp/FlipMouse.zip
+
+say "Alert – prepare for permission request on phone."
 adb shell su -c "magisk --install-module '/data/local/tmp/FlipMouse.zip'"
 
 echo "FlipMouse install command executed ✔"
