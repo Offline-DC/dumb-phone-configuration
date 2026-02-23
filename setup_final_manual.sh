@@ -95,7 +95,6 @@ adb shell monkey -p com.offlineinc.dumbdownlauncher -c android.intent.category.L
 # ------------------------
 # Notification listener access
 # ------------------------
-adb shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
 adb shell cmd notification allow_listener com.openbubbles.messaging/com.bluebubbles.messaging.services.notifications.NotificationListener
 
 echo "adjust density"
@@ -104,9 +103,21 @@ adb shell wm density 120
 echo "Done ✔. Do some testing and then turn off."
 echo "Now turn on notifications for mini list launcher and open bubbles"
 
+## Add launcher notification service and mouse importance
+adb shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
 adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
 adb shell settings put secure accessibility_enabled 1
 adb shell settings get secure enabled_accessibility_services
+
+# Allow calls from anyone during do not disturb
+adb shell << 'EOF'
+su
+sed -i 's/callsFrom="2"/callsFrom="0"/' /data/system/notification_policy.xml
+sed -i 's/callsFrom="1"/callsFrom="0"/' /data/system/notification_policy.xml
+grep callsFrom /data/system/notification_policy.xml
+exit
+EOF
+###
 
 adb shell appops set com.topjohnwu.magisk POST_NOTIFICATION deny
 adb shell 'su -c "sed -i /foreground_service/s/importance=.2./importance=\\\"0\\\"/ /data/system/notification_policy.xml"'
