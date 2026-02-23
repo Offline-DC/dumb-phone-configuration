@@ -134,9 +134,7 @@ adb reboot
 echo "Waiting for device..."
 adb wait-for-device
 
-adb shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-
 say "ACTION REQUIRED. Go through post launch setup" 
-echo "- In Magisk (opened for your convenience), use Mouse to go to settings gear, and change Superuser Notification to None"
+echo "- Launch Magisk app (in all apps), use Mouse to go to settings gear, and change Superuser Notification to None"
 echo "- In OpenBubbles, go through setup and scan mac QR code"
-echo "- Reboot and retest everything"
+echo "- Retest everything"
