@@ -1,55 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-OPENBUBBLES_PKG="com.openbubbles.messaging"
 STOCK_LAUNCHER_PKG="com.android.launcher3"
-
-# ------------------------
-# Helpers
-# ------------------------
-pause() {
-  echo
-  read -r -p "Press ENTER to continue..." _
-}
-
-say() {
-  echo
-  echo "==> $*"
-}
-
-need_cmd() {
-  command -v "$1" >/dev/null 2>&1 || {
-    echo "Missing required command: $1"
-    exit 1
-  }
-}
 
 pkg_installed() {
   local pkg="$1"
   adb shell pm list packages 2>/dev/null | tr -d '\r' | grep -q "^package:${pkg}$"
-}
-
-wait_for_boot_completed() {
-  # TCL / low-end Android: adb can be up before Android is actually ready
-  local tries="${1:-90}"
-  for ((i=1; i<=tries; i++)); do
-    local bc
-    bc="$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r' || true)"
-    if [[ "$bc" == "1" ]]; then
-      # extra beat for SystemUI/Home to settle
-      sleep 2
-      return 0
-    fi
-    sleep 1
-  done
-  echo "WARNING: sys.boot_completed not reported after ${tries}s; continuing anyway."
-  return 0
-}
-
-start_home() {
-  # Reduce race with Launcher3 being in foreground
-  adb shell am force-stop "${STOCK_LAUNCHER_PKG}" >/dev/null 2>&1 || true
-  adb shell am start -a android.intent.action.MAIN -c android.intent.category.HOME >/dev/null 2>&1 || true
 }
 
 # ------------------------
@@ -116,8 +72,9 @@ sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true
 EOF
 ###
 
-adb shell appops set com.topjohnwu.magisk POST_NOTIFICATION deny
-adb shell 'su -c "sed -i /foreground_service/s/importance=.2./importance=\\\"0\\\"/ /data/system/notification_policy.xml"'
+echo "Disabling Magisk notifications..."
+adb shell su -c 'appops set com.topjohnwu.magisk POST_NOTIFICATION ignore'
+adb shell su -c 'appops get com.topjohnwu.magisk POST_NOTIFICATION'
 
 echo "Adding MO contact..."
 
@@ -137,14 +94,17 @@ adb shell content insert --uri content://com.android.contacts/data --bind raw_co
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:14047163605 --bind data2:i:2
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:support@offline.community --bind data2:i:1
 
-echo "Rebooting..."
-  
-adb reboot
+
+adb shell reboot
 
 echo "Waiting for device..."
 adb wait-for-device
 
 say "ACTION REQUIRED. Go through post launch setup" 
-echo "- Launch Magisk app (in all apps), use Mouse to go to settings gear, and change Superuser Notification to None"
+echo "- Launch Magisk app (in all apps), use Mouse to go to settings gear, and 1) change Superuser Notification to None, and 2) turn off \"Check Updates\""
 echo "- In OpenBubbles, go through setup and scan mac QR code"
+echo "- Run below command to turn off Foreground Service:\n"
+echo "adb shell am start -a android.settings.CHANNEL_NOTIFICATION_SETTINGS \
+  --es android.provider.extra.APP_PACKAGE com.openbubbles.messaging \
+  --es android.provider.extra.CHANNEL_ID com.bluebubbles.foreground_service\n"
 echo "- Retest everything"
