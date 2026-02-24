@@ -109,13 +109,10 @@ adb shell settings put secure enabled_accessibility_services com.offlineinc.dumb
 adb shell settings put secure accessibility_enabled 1
 adb shell settings get secure enabled_accessibility_services
 
-# Allow calls from anyone during do not disturb
+## Give mini list launcher dnd access
 adb shell << 'EOF'
 su
-sed -i 's/callsFrom="2"/callsFrom="0"/' /data/system/notification_policy.xml
-sed -i 's/callsFrom="1"/callsFrom="0"/' /data/system/notification_policy.xml
-grep callsFrom /data/system/notification_policy.xml
-exit
+sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true" />|<service_listing approved="com.android.camera2" user="0" primary="true" />\n<service_listing approved="com.offlineinc.dumbdownlauncher" user="0" primary="true" />|' /data/system/notification_policy.xml
 EOF
 ###
 
@@ -140,6 +137,8 @@ adb shell content insert --uri content://com.android.contacts/data --bind raw_co
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:14047163605 --bind data2:i:2
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:support@offline.community --bind data2:i:1
 
+echo "Rebooting..."
+  
 adb reboot
 
 echo "Waiting for device..."
