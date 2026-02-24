@@ -53,7 +53,8 @@ if [[ "$VERSION" == "0.3.0" ]]; then
   ./install_magisk.sh
   ./add_modules.sh
   ./add_apks.sh
-  ./setup_final_manual.sh
+  ./automated_configuration.sh
+  ./post_manual_setup.sh
 
   exit 0
 fi

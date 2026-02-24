@@ -94,17 +94,5 @@ adb shell content insert --uri content://com.android.contacts/data --bind raw_co
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:14047163605 --bind data2:i:2
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:support@offline.community --bind data2:i:1
 
-
-adb shell reboot
-
-echo "Waiting for device..."
-adb wait-for-device
-
-say "ACTION REQUIRED. Go through post launch setup" 
-echo "- Launch Magisk app (in all apps), use Mouse to go to settings gear, and 1) change Superuser Notification to None, and 2) turn off \"Check Updates\""
-echo "- In OpenBubbles, go through setup and scan mac QR code"
-echo "- Run below command to turn off Foreground Service:\n"
-echo "adb shell am start -a android.settings.CHANNEL_NOTIFICATION_SETTINGS \
-  --es android.provider.extra.APP_PACKAGE com.openbubbles.messaging \
-  --es android.provider.extra.CHANNEL_ID com.bluebubbles.foreground_service\n"
-echo "- Retest everything"
+echo "Rebooting..."
+adb reboot || true
