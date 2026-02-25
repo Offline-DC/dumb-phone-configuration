@@ -1,15 +1,41 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ---------------------------------------
+# Simple ADB scoping helper
+# ---------------------------------------
+SERIAL=""
+# parse optional --serial argument
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --serial)
+      SERIAL="$2"
+      shift 2
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+adb_do() {
+  if [[ -n "$SERIAL" ]]; then
+    adb -s "$SERIAL" "$@"
+  else
+    adb "$@"
+  fi
+}
+# END ADB SCOPING HELPER
+
 say(){ echo; echo "==> $*"; }
 
 APKDIR="./apk"
 
 echo "Waiting for device... Make sure to allow debugging after startup"
-adb wait-for-device
+adb_do wait-for-device
 
 echo "Waiting for sys.boot_completed..."
-until adb shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
+until adb_do shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
   sleep 1
 done
 
@@ -22,7 +48,7 @@ install_apk() {
     return 0
   fi
 
-  if adb install -r "$path" >/dev/null; then
+  if adb_do install -r "$path" >/dev/null; then
     echo "PASS  $name"
   else
     echo "FAIL  $name"
@@ -54,16 +80,17 @@ install_splits_dir() {
   done < <(find "$dir" -maxdepth 1 -type f -name "*.apk" ! -name "base.apk" -print | sort)
 
   if ((${#splits[@]} > 0)); then
-    adb install-multiple -r "$base" "${splits[@]}" >/dev/null
+    adb_do install-multiple -r "$base" "${splits[@]}" >/dev/null
   else
     # No splits found — install base only (or change this to fail if you prefer)
-    adb install -r "$base" >/dev/null
+    adb_do install -r "$base" >/dev/null
   fi
 
   echo "PASS  $name"
 }
 
-echo "Installing Apps..."
+echo "Installing Apps... In the meantime, agree to terms and conditions and put on silent"
+say "Accept terms and conditions and put on silent"
 
 # --- Single APKs ---
 install_apk "WhatsApp"            "$APKDIR/WhatsApp.apk"            || true
@@ -75,9 +102,9 @@ install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 
 # --- Split bundles ---
 install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
-install_splits_dir "Contact iCloud Sync" "$APKDIR/contacticloudsync" || true
+install_splits_dir "Contact iCloud Sync" "$APKDIR/contact-sync" || true
 
 # Remove things:
-adb shell pm disable-user --user 0 com.android.email
+adb_do shell pm disable-user --user 0 com.android.email
 
 say "APK install step complete."

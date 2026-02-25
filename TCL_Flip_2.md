@@ -24,11 +24,16 @@ python3 -m pip install --user pyserial
 
 ```bash
 
-# Versions:
-# 0.2.0 Pete version
-# 0.3.0 March Alpha Version
-./full_flash.sh --version "0.3.0"
+# Plug cords into usb ports
+# Then run below
+# then take battery out of phone, plug in phone, put battery back in
+# Do multiple at once
+# When done with a batch, close out of terminals and terminate this script
+./run.sh
 
+# Tips
+# - If stuck on "waiting for device" manually restart the device yourself (you'll need to know which one!)
+# - If something didn't work, just unplug that one and set aside and do in the next round.
 ```
 
 **Follow the instructions in the command line throughout**
