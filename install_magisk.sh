@@ -58,7 +58,7 @@ adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 
 echo
 echo "Waiting for Magisk notification..."
 
-timeout=60
+timeout=120
 elapsed=0
 
 until adb_do shell dumpsys notification | grep -q "com.topjohnwu.magisk"; do
