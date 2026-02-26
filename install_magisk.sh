@@ -53,7 +53,6 @@ echo "Boot complete."
 echo
 echo "Initiating Magisk setup (follow instructions on screen)"
 adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
 
 echo
 echo "Waiting for Magisk notification..."
@@ -66,6 +65,8 @@ until adb_do shell dumpsys notification | grep -q "com.topjohnwu.magisk"; do
   elapsed=$((elapsed + 1))
   if [ "$elapsed" -ge "$timeout" ]; then
     echo "Timed out waiting for Magisk notification"
+    adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
+    read -p "ERROR – Magisk timed out, manually launching magisk, press ENTER if reaching reboot screen..."
     break
   fi
 done
@@ -73,13 +74,13 @@ done
 echo "Magisk notification detected. Continuing..."
 
 echo "Follow final setup command and reboot via Magisk UI"
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
 
 echo
 echo "Complete setup on the device."
 echo "Waiting for Magisk reboot..."
+adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
 
-WAIT_TIMEOUT=60
+WAIT_TIMEOUT=120
 START_TIME=$(date +%s)
 
 while true; do
@@ -95,6 +96,7 @@ while true; do
     if [ "$ELAPSED" -ge "$WAIT_TIMEOUT" ]; then
         echo "No reboot detected after ${WAIT_TIMEOUT}s — launching Magisk manually..."
         adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
+        read -p "ERROR – Magisk restart timed out. Manually launching Magisk... press ENTER after device is turned off..."
         break
     fi
 

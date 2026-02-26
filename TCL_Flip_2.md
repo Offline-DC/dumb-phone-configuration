@@ -34,6 +34,7 @@ python3 -m pip install --user pyserial
 # Tips
 # - If stuck on "waiting for device" manually restart the device yourself (you'll need to know which one!)
 # - If something didn't work, just unplug that one and set aside and do in the next round.
+# - Stagger your boots on the phones
 ```
 
 **Follow the instructions in the command line throughout**

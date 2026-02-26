@@ -48,6 +48,9 @@ fi
 ./flash_root.sh --serial "$SERIAL"
 
 # (B) ADB stage:
+
+read -p "If SIM, wait for carrier to switch (should be automatic). Enable USB debugging, then STAGGER pressing ENTER to continue..."
+
 echo "Waiting for ADB device $SERIAL... If this hangs here and doesn't continue then unplug and redo again..."
 adb -s "$SERIAL" wait-for-device
 
