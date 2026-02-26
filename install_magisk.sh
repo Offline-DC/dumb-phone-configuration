@@ -78,7 +78,7 @@ echo "Follow final setup command and reboot via Magisk UI"
 
 echo
 echo "Complete setup on the device."
-echo "Waiting for Magisk reboot..."
+echo "Waiting for Magisk reboot... If not prompted by Magisk, restart manually."
 adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
 
 WAIT_TIMEOUT=120
