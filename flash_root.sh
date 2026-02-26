@@ -24,26 +24,8 @@ echo
 echo "[3/5] Flashing intermediate image..."
 fastboot flash boot "$BOOT_IMG_ONE"
 
-echo "Powering off device..."
-fastboot reboot
-
 echo
-echo "[4/5] Device is off. Run bootfind.sh again to get back into fastboot..."
-./bootfind.sh
-
-echo "Waiting for fastboot device..."
-for _i in {1..60}; do
-  if fastboot devices | grep -q .; then
-    break
-  fi
-  sleep 1
-done
-fastboot devices
-
-fastboot flashing unlock || true
-
-echo
-echo "[5/5] Flashing target image..."
+echo "[4/5] Flashing target image..."
 fastboot flash boot "$BOOT_IMG_FINAL"
 
 echo "Rebooting..."
