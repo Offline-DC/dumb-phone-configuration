@@ -76,13 +76,14 @@ echo "Disabling Magisk notifications..."
 adb shell su -c 'appops set com.topjohnwu.magisk POST_NOTIFICATION ignore'
 adb shell su -c 'appops get com.topjohnwu.magisk POST_NOTIFICATION'
 
+
 echo "Adding MO contact..."
 
 adb shell content insert --uri content://com.android.contacts/raw_contacts --bind account_type:s: --bind account_name:s:
 ID=$(adb shell content query --uri content://com.android.contacts/raw_contacts --projection _id | tail -1 | grep -o '_id=[0-9]*' | cut -d= -f2)
 echo "Got ID: $ID"
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/name --bind data1:s:MO
-adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:18446335463 --bind data2:i:2
+adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:18335183672 --bind data2:i:2
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:month@offline.community --bind data2:i:1
 
 echo "Adding Dumb Line contact..."
@@ -93,6 +94,31 @@ echo "Got ID: $ID"
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/name --bind data2:s:Dumb --bind data3:s:Line
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/phone_v2 --bind data1:s:14047163605 --bind data2:i:2
 adb shell content insert --uri content://com.android.contacts/data --bind raw_contact_id:i:$ID --bind mimetype:s:vnd.android.cursor.item/email_v2 --bind data1:s:support@offline.community --bind data2:i:1
+
+echo "Adding Dumbphone Diary contact..."
+
+adb shell content insert \
+  --uri content://com.android.contacts/raw_contacts \
+  --bind account_type:s: \
+  --bind account_name:s:
+
+ID=$(adb shell content query \
+  --uri content://com.android.contacts/raw_contacts \
+  --projection _id | tail -1 | grep -o '_id=[0-9]*' | cut -d= -f2)
+
+echo "Got ID: $ID"
+adb shell content insert \
+  --uri content://com.android.contacts/data \
+  --bind raw_contact_id:i:$ID \
+  --bind mimetype:s:vnd.android.cursor.item/name \
+  --bind data2:s:Dumbphone \
+  --bind data3:s:Diary
+adb shell content insert \
+  --uri content://com.android.contacts/data \
+  --bind raw_contact_id:i:$ID \
+  --bind mimetype:s:vnd.android.cursor.item/phone_v2 \
+  --bind data1:s:14048006761 \
+  --bind data2:i:2
 
 echo "Rebooting..."
 adb reboot || true
