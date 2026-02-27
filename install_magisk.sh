@@ -50,6 +50,11 @@ done
 sleep 5
 echo "Boot complete."
 
+echo "Installing full Magisk APK from ramdisk..."
+MAGISK_PATH=$(adb_do shell magisk --path 2>/dev/null | tr -d '\r')
+adb_do shell su -c "pm install -r ${MAGISK_PATH}/Magisk.apk"
+echo "Magisk APK installed ✔"
+
 echo
 echo "Initiating Magisk setup (follow instructions on screen)"
 adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1

@@ -79,12 +79,6 @@ adb_do shell monkey -p com.offlineinc.dumbdownlauncher -c android.intent.categor
 # ------------------------
 adb_do shell cmd notification allow_listener com.openbubbles.messaging/com.bluebubbles.messaging.services.notifications.NotificationListener
 
-echo "adjust density"
-adb_do shell wm density 120
-
-echo "Done ✔. Do some testing and then turn off."
-echo "Now turn on notifications for mini list launcher and open bubbles"
-
 ## Add launcher notification service and mouse importance
 adb_do shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
 adb_do shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
@@ -97,10 +91,6 @@ su
 sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true" />|<service_listing approved="com.android.camera2" user="0" primary="true" />\n<service_listing approved="com.offlineinc.dumbdownlauncher" user="0" primary="true" />|' /data/system/notification_policy.xml
 EOF
 ###
-
-echo "Disabling Magisk notifications..."
-adb_do shell su -c 'appops set com.topjohnwu.magisk POST_NOTIFICATION ignore'
-adb_do shell su -c 'appops get com.topjohnwu.magisk POST_NOTIFICATION'
 
 echo "Adding MO contact..."
 
@@ -144,8 +134,6 @@ adb_do shell content insert \
   --bind mimetype:s:vnd.android.cursor.item/phone_v2 \
   --bind data1:s:14048006761 \
   --bind data2:i:2
-
-adb_do shell settings put global zen_mode 0
 
 echo "Rebooting..."
 adb_do reboot || true

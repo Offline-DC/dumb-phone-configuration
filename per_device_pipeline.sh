@@ -61,7 +61,6 @@ fi
 
 ./wifi_install.sh --serial "$SERIAL"
 ./install_magisk.sh --serial "$SERIAL"
-./add_modules.sh --serial "$SERIAL"
 ./add_apks.sh --serial "$SERIAL"
 ./automated_configuration.sh --serial "$SERIAL"
 ./post_manual_setup.sh --serial "$SERIAL"
