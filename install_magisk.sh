@@ -72,34 +72,15 @@ until adb_do shell dumpsys notification | grep -q "com.topjohnwu.magisk"; do
   fi
 done
 
-echo "Magisk notification detected. Continuing..."
+echo "Magisk notification detected — rebooting to complete setup..."
+adb_do reboot
 
-echo "Follow final setup command and reboot via Magisk UI"
+echo "Waiting for device to come back up..."
+adb_do wait-for-device
 
-echo
-echo "Complete setup on the device."
-echo "Waiting for Magisk reboot..."
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-
-WAIT_TIMEOUT=120
-START_TIME=$(date +%s)
-
-while true; do
-    # check if adb is gone (device disconnected)
-    if ! adb_do get-state >/dev/null 2>&1; then
-        echo "Device disconnected ✔"
-        break
-    fi
-
-    NOW=$(date +%s)
-    ELAPSED=$((NOW - START_TIME))
-
-    if [ "$ELAPSED" -ge "$WAIT_TIMEOUT" ]; then
-        echo "No reboot detected after ${WAIT_TIMEOUT}s — launching Magisk manually..."
-        adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-        read -p "ERROR – Magisk restart timed out. Manually launching Magisk... press ENTER after device is back on home screen..."
-        break
-    fi
-
-    sleep 1
+echo "Waiting for sys.boot_completed..."
+until adb_do shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
+  sleep 1
 done
+
+echo "Magisk setup complete ✔"
