@@ -33,7 +33,7 @@ adb_do() {
 }
 # END ADB SCOPING HELPER
 
-echo "Waiting for device..."
+echo "Waiting for device... If taking a while, restart manually"
 adb_do wait-for-device
 
 echo "Waiting for sys.boot_completed..."
@@ -81,5 +81,5 @@ adb_do shell settings put secure profile_setup_complete 1 2>/dev/null || true
 echo "Rebooting device..."
 adb_do reboot
 
-echo "Waiting for device..."
+echo "Waiting for device... if not finding device, restart device manually"
 adb_do wait-for-device >/dev/null 2>&1 || true
