@@ -27,7 +27,7 @@ adb_do() {
 }
 # END ADB SCOPING HELPER
 
-echo "Waiting for device..."
+echo "Waiting for device... if it doesn't continue the script after restarting, restart manually"
 adb_do wait-for-device
 
 echo "Waiting for sys.boot_completed..."

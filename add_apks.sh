@@ -102,7 +102,6 @@ install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 
 # --- Split bundles ---
 install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
-install_splits_dir "Contact iCloud Sync" "$APKDIR/contact-sync" || true
 
 # Remove things:
 adb_do shell pm disable-user --user 0 com.android.email
