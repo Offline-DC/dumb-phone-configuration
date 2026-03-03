@@ -1,4 +1,7 @@
-*.apk
+apk/openbubbles/**
+WhatsApp.apk
+azure-authenticator.apk
+
 tclprovision.zip
 DisableFavoriteContactsKey.zip
 
