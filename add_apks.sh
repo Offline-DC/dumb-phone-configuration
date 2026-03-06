@@ -94,14 +94,15 @@ say "Accept terms and conditions and put on silent"
 
 # --- Single APKs ---
 install_apk "WhatsApp"            "$APKDIR/WhatsApp.apk"            || true
-install_apk "Uber"                "$APKDIR/uber-repo.apk"           || true
 install_apk "Launcher"            "$APKDIR/launcher.apk"            || true
 install_apk "Google Maps (lite)"  "$APKDIR/googlemaps/maps.apk"     || true
-install_apk "Contact Sync"         "$APKDIR/contact-sync.apk"         || true
+install_apk "Contact Sync"        "$APKDIR/contact-sync.apk"        || true
 install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
+install_apk "Chrome Library"      "$APKDIR/trichromelibrary.apk"    || true
 
 # --- Split bundles ---
-install_splits_dir "OpenBubbles"        "$APKDIR/openbubbles"        || true
+install_splits_dir "OpenBubbles"   "$APKDIR/openbubbles"        || true
+install_splits_dir "Chrome"        "$APKDIR/chrome"        || true
 
 # Remove things:
 adb_do shell pm disable-user --user 0 com.android.email
