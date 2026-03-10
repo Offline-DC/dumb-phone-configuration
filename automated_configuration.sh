@@ -85,13 +85,12 @@ adb_do shell wm density 120
 echo "Done ✔. Do some testing and then turn off."
 echo "Now turn on notifications for mini list launcher and open bubbles"
 
-## Add launcher notification service and mouse importance
+## Add launcher notification service, mouse importance, contact access, dnd access
 adb_do shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
 adb_do shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
 adb_do shell settings put secure accessibility_enabled 1
 adb_do shell settings get secure enabled_accessibility_services
-
-## Give mini list launcher dnd access
+adb_do shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_CONTACTS
 adb_do shell << 'EOF'
 su
 sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true" />|<service_listing approved="com.android.camera2" user="0" primary="true" />\n<service_listing approved="com.offlineinc.dumbdownlauncher" user="0" primary="true" />|' /data/system/notification_policy.xml
