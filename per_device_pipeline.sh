@@ -46,20 +46,6 @@ if [[ -z "$VERSION" ]]; then
 fi
 
 ./flash_root.sh --serial "$SERIAL"
-
-# (B) ADB stage:
-
-read -p "If SIM, wait for carrier to switch (should be automatic). Enable USB debugging, then STAGGER pressing ENTER to continue..."
-
-echo "Waiting for ADB device $SERIAL... If this hangs here and doesn't continue then unplug and redo again..."
-adb -s "$SERIAL" wait-for-device
-
-STATE="$(adb -s "$SERIAL" get-state 2>/dev/null || true)"
-if [[ "$STATE" != "device" ]]; then
-  echo "NOTE: adb state is '$STATE'. If unauthorized, approve USB debugging on device." >&2
-fi
-
-./wifi_install.sh --serial "$SERIAL"
 ./install_magisk.sh --serial "$SERIAL"
 ./add_modules.sh --serial "$SERIAL"
 ./add_apks.sh --serial "$SERIAL"
