@@ -32,7 +32,6 @@ adb_do() {
   fi
 }
 # END ADB SCOPING HELPER
-
 echo "Waiting for device... If taking a while, restart manually"
 adb_do wait-for-device
 
@@ -67,19 +66,14 @@ adb_do shell su -c "magisk --install-module '/data/local/tmp/FlipMouse.zip'"
 
 echo "FlipMouse install command executed ✔"
 
-echo "Pushing ${KEYMOD_ZIP} to Downloads..."
-adb_do push "${KEYMOD_LOCAL}" "${KEYMOD_REMOTE}"
+echo "Pushing DisableFavoriteContactsKey to Downloads..."
+adb_do push "./DisableFavoriteContactsKey.zip" "/sdcard/Download/DisableFavoriteContactsKey.zip"
 
 echo "Installing key-remap module..."
-adb_do shell su -c "magisk --install-module '${KEYMOD_REMOTE}'"
+say "Alert – prepare for permission request on phone."
+adb_do shell su -c "magisk --install-module '/sdcard/Download/DisableFavoriteContactsKey.zip'"
 echo "Key-remap install command executed ✔"
 
 adb_do shell settings put global device_provisioned 1
 adb_do shell settings put secure user_setup_complete 1
 adb_do shell settings put secure profile_setup_complete 1 2>/dev/null || true
-
-echo "Rebooting device..."
-adb_do reboot
-
-echo "Waiting for device... if not finding device, restart device manually"
-adb_do wait-for-device >/dev/null 2>&1 || true

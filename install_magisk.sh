@@ -27,79 +27,17 @@ adb_do() {
 }
 # END ADB SCOPING HELPER
 
-adb_do reboot
-
-echo "Waiting for device... if not working, manually restart"
+echo "Waiting for device... when prompted allow USB debugging..."
 adb_do wait-for-device
 
-echo "Waiting for sys.boot_completed..."
-until adb_do shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
-  sleep 1
-done
+echo "Installing magisk..."
 
-echo "Waiting for dev.bootcomplete..."
-until adb_do shell 'test "$(getprop dev.bootcomplete)" = "1"' >/dev/null 2>&1; do
-  sleep 1
-done
+adb_do install Magisk-v30.7.apk
 
-echo "Waiting for package manager..."
-until adb_do shell 'pm path android >/dev/null 2>&1' >/dev/null 2>&1; do
-  sleep 1
-done
+say "Alert – prepare for permission request on phone."
 
-sleep 5
-echo "Boot complete."
+adb_do shell monkey -p com.topjohnwu.magisk 1
 
-echo
-echo "Initiating Magisk setup (follow instructions on screen)"
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
+read -p "ACTION REQUIRED: Select OK, then go to Direct Install, then when commands finish, press ENTER"
 
-echo
-echo "Waiting for Magisk notification..."
-
-timeout=120
-elapsed=0
-
-until adb_do shell dumpsys notification | grep -q "com.topjohnwu.magisk"; do
-  sleep 1
-  elapsed=$((elapsed + 1))
-  if [ "$elapsed" -ge "$timeout" ]; then
-    echo "Timed out waiting for Magisk notification"
-    adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-    read -p "ERROR – Magisk timed out, manually launching magisk, press ENTER if reached home screen after restart..."
-    break
-  fi
-done
-
-echo "Magisk notification detected. Continuing..."
-
-echo "Follow final setup command and reboot via Magisk UI"
-
-echo
-echo "Complete setup on the device."
-echo "Waiting for Magisk reboot... If not prompted by Magisk, restart manually."
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-
-WAIT_TIMEOUT=120
-START_TIME=$(date +%s)
-
-while true; do
-    # check if adb is gone (device disconnected)
-    if ! adb_do get-state >/dev/null 2>&1; then
-        echo "Device disconnected ✔"
-        break
-    fi
-
-    NOW=$(date +%s)
-    ELAPSED=$((NOW - START_TIME))
-
-    if [ "$ELAPSED" -ge "$WAIT_TIMEOUT" ]; then
-        echo "No reboot detected after ${WAIT_TIMEOUT}s — launching Magisk manually..."
-        adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-        read -p "ERROR – Magisk restart timed out. Manually launching Magisk... press ENTER after device is back on home screen..."
-        break
-    fi
-
-    sleep 1
-done
+adb_do shell reboot || true
