@@ -27,7 +27,7 @@ adb_do() {
 }
 # END ADB SCOPING HELPER
 
-echo "Waiting for device... when prompted allow USB debugging..."
+echo "Waiting for device... wait for network carrier to register, then when prompted allow USB debugging... if not prompted, restart manually"
 adb_do wait-for-device
 
 echo "Installing magisk..."
@@ -35,6 +35,32 @@ echo "Installing magisk..."
 adb_do install Magisk-v30.7.apk
 
 say "Alert – prepare for permission request on phone."
+adb_do shell su -c "/vendor/bin/write_protect 0"
+
+adb_do shell reboot || true
+
+echo "Waiting for device... If taking a while, restart manually"
+adb_do wait-for-device
+
+echo "Waiting for sys.boot_completed..."
+until adb_do shell 'test "$(getprop sys.boot_completed)" = "1"' >/dev/null 2>&1; do
+  sleep 1
+done
+
+echo "Waiting for dev.bootcomplete..."
+until adb_do shell 'test "$(getprop dev.bootcomplete)" = "1"' >/dev/null 2>&1; do
+  sleep 1
+done
+
+echo "Waiting for package manager..."
+until adb_do shell 'pm path android >/dev/null 2>&1' >/dev/null 2>&1; do
+  sleep 1
+done
+
+echo "Waiting for sdcard..."
+until adb_do shell 'ls /sdcard' >/dev/null 2>&1; do
+  sleep 1
+done
 
 adb_do shell monkey -p com.topjohnwu.magisk 1
 

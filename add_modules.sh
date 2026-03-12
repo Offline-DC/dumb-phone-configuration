@@ -70,7 +70,6 @@ echo "Pushing DisableFavoriteContactsKey to Downloads..."
 adb_do push "./DisableFavoriteContactsKey.zip" "/sdcard/Download/DisableFavoriteContactsKey.zip"
 
 echo "Installing key-remap module..."
-say "Alert – prepare for permission request on phone."
 adb_do shell su -c "magisk --install-module '/sdcard/Download/DisableFavoriteContactsKey.zip'"
 echo "Key-remap install command executed ✔"
 
