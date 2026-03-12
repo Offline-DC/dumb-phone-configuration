@@ -95,6 +95,8 @@ adb_do shell << 'EOF'
 su
 sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true" />|<service_listing approved="com.android.camera2" user="0" primary="true" />\n<service_listing approved="com.offlineinc.dumbdownlauncher" user="0" primary="true" />|' /data/system/notification_policy.xml
 EOF
+adb_do shell settings put global wifi_networks_available_notification_on 0
+
 ###
 
 echo "Disabling Magisk notifications..."
