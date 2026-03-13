@@ -80,28 +80,29 @@ adb_do shell monkey -p com.offlineinc.dumbdownlauncher -c android.intent.categor
 adb_do shell cmd notification allow_listener com.openbubbles.messaging/com.bluebubbles.messaging.services.notifications.NotificationListener
 
 echo "adjust density"
-adb_do shell wm density 120
+adb_do shell wm density 110
+adb_do shell settings put system font_scale 1.45
 
 echo "Done ✔. Do some testing and then turn off."
 echo "Now turn on notifications for mini list launcher and open bubbles"
 
 ## Add launcher notification service, mouse importance, contact access, dnd access
-adb_do shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
-adb_do shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
-adb_do shell settings put secure accessibility_enabled 1
-adb_do shell settings get secure enabled_accessibility_services
-adb_do shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_CONTACTS
-adb_do shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_PHONE_STATE
-adb_do shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_PHONE_NUMBERS
-adb_do shell << 'EOF'
+adb shell cmd notification allow_listener com.offlineinc.dumbdownlauncher/com.offlineinc.dumbdownlauncher.notifications.DumbNotificationListenerService
+adb shell settings put secure enabled_accessibility_services com.offlineinc.dumbdownlauncher/.MouseAccessibilityService
+adb shell settings put secure accessibility_enabled 1
+adb shell settings get secure enabled_accessibility_services
+adb shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_CONTACTS
+adb shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_PHONE_STATE
+adb shell pm grant com.offlineinc.dumbdownlauncher android.permission.READ_PHONE_NUMBERS
+adb shell << 'EOF'
 su
 sed -i 's|<service_listing approved="com.android.camera2" user="0" primary="true" />|<service_listing approved="com.android.camera2" user="0" primary="true" />\n<service_listing approved="com.offlineinc.dumbdownlauncher" user="0" primary="true" />|' /data/system/notification_policy.xml
 EOF
-adb_do shell am start -a android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS -d package:com.android.chrome
-adb_do shell dumpsys deviceidle whitelist +com.android.chrome
-adb_do shell settings put global background_process_limit 6
-adb_do shell settings put global always_finish_activities 0
-adb_do shell settings put global wifi_networks_available_notification_on 0
+adb shell am start -a android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS -d package:com.android.chrome
+adb shell dumpsys deviceidle whitelist +com.android.chrome
+adb shell settings put global background_process_limit 6
+adb shell settings put global always_finish_activities 0
+adb shell settings put global wifi_networks_available_notification_on 0
 ###
 
 echo "Disabling Magisk notifications..."

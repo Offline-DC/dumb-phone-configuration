@@ -99,6 +99,7 @@ install_apk "Google Maps (lite)"  "$APKDIR/googlemaps/maps.apk"     || true
 install_apk "Contact Sync"        "$APKDIR/contact-sync.apk"        || true
 install_apk "Azure Authenticator" "$APKDIR/azure-authenticator.apk" || true
 install_apk "Chrome Library"      "$APKDIR/trichromelibrary.apk"    || true
+install_apk "Uber Lite"           "$APKDIR/uberlite.apk"            || true
 
 # --- Split bundles ---
 install_splits_dir "OpenBubbles"   "$APKDIR/openbubbles"        || true
