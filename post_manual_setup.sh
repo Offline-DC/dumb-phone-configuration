@@ -54,22 +54,6 @@ echo
 read -p "Wait for home screen and press ENTER to begin..."
 
 ############################################
-# STEP — MAGISK SETTINGS
-############################################
-clear
-echo "STEP — Magisk Settings"
-echo
-echo "Instructions:"
-echo "  0) using mouse, go to settings (gear in top right)"
-echo "  1) Change 'Superuser Notification' → NONE"
-echo "  2) Turn OFF 'Check Updates'"
-echo
-
-adb_do shell monkey -p com.topjohnwu.magisk -c android.intent.category.LAUNCHER 1
-
-read -p "Complete the changes, then press ENTER to continue..."
-
-############################################
 # STEP — OPENBUBBLES SETUP
 ############################################
 clear

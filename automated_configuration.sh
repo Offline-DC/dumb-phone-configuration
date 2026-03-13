@@ -153,5 +153,17 @@ adb_do shell content insert \
 
 adb_do shell settings put global zen_mode 0
 
+cat > magisk_prefs.xml << 'EOF'
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="check_update" value="false" />
+    <string name="su_notification">0</string>
+</map>
+EOF
+
+adb_do push magisk_prefs.xml /data/local/tmp/magisk_prefs.xml
+
+adb_do shell su -mm -c 'cp /data/local/tmp/magisk_prefs.xml /data/user_de/0/com.topjohnwu.magisk/shared_prefs/com.topjohnwu.magisk_preferences.xml'
+
 echo "Rebooting..."
 adb_do reboot || true
