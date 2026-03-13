@@ -62,7 +62,9 @@ until adb_do shell 'ls /sdcard' >/dev/null 2>&1; do
   sleep 1
 done
 
-adb_do shell monkey -p com.topjohnwu.magisk 1
+sleep 5
+
+adb_do shell monkey -p com.topjohnwu.magisk 1 || true
 
 read -p "ACTION REQUIRED: Select OK, then go to Direct Install, then when commands finish, press ENTER"
 
